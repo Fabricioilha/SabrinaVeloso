@@ -1,4 +1,4 @@
-import React from "react";
+//import React from "react";
 
 const Footer = () => (
   <footer className="w-full bg-gradient-to-r from-blue-900 via-purple-900 to-pink-900 py-6 px-4 mt-8">

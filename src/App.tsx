@@ -1,4 +1,4 @@
-import { useState } from 'react'
+//import { useState } from 'react'
 import Header from "./components/Header/Header";
 import Carousel from './components/Banner/Carousel';
 import About from "./components/About/About";
@@ -10,7 +10,7 @@ import PartnersSection from './components/Partner/Partner';
 import Footer from './components/Footer/Footer';
 
 function App() {
-  const [count, setCount] = useState(0)
+  //const [count, setCount] = useState(0)
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React from "react";
+//import React from "react";
 
 const AboutSection = () => (
   <section className="w-full bg-white py-16 px-4 md:px-0 flex justify-center">

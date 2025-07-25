@@ -21,24 +21,24 @@ const properties = [
 const Carousel = () => {
 	const [current, setCurrent] = useState(0);
 	const [offset, setOffset] = useState(0);
-	const [isTransitioning, setIsTransitioning] = useState(false);
+	//const [isTransitioning, setIsTransitioning] = useState(false);
 	const startX = useRef<number | null>(null);
 	const isDragging = useRef(false);
 
 	// Troca automática a cada 4 segundos (loop infinito visual)
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setIsTransitioning(true);
+			//setIsTransitioning(true);
 			setOffset(-window.innerWidth);
 			setTimeout(() => {
 				if (current === properties.length - 1) {
-					setIsTransitioning(false);
+					//setIsTransitioning(false);
 					setOffset(0);
 					setCurrent(0);
 				} else {
 					setCurrent((prev) => prev + 1);
 					setOffset(0);
-					setIsTransitioning(false);
+					//setIsTransitioning(false);
 				}
 			}, 300);
 		}, 4000);
@@ -46,7 +46,7 @@ const Carousel = () => {
 	}, [current]);
 
 	const handleChangeSlide = (direction: number) => {
-		setIsTransitioning(true);
+		//setIsTransitioning(true);
 		setTimeout(() => {
 			setCurrent((prev) => {
 				if (direction > 0) {
@@ -56,7 +56,7 @@ const Carousel = () => {
 				}
 			});
 			setOffset(0);
-			setIsTransitioning(false);
+			//setIsTransitioning(false);
 		}, 300);
 	};
 

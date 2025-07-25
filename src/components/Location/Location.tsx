@@ -1,4 +1,4 @@
-import React from "react";
+//import React from "react";
 
 const LocationSection = () => (
   <section className="w-full bg-white py-12 px-2 sm:px-4 md:px-0" id="location">

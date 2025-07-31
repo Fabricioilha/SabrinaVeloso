@@ -120,7 +120,7 @@ const Carousel = () => {
 			onMouseMove={handleMouseMove}
 			onMouseUp={handleMouseUp}
 			onMouseLeave={handleMouseLeave}
-			style={{ cursor: isDragging.current ? "grabbing" : "grab" }}
+			//style={{ cursor: isDragging.current ? "grabbing" : "grab" }}
 		>
 			<div
 				className="w-full h-full flex"

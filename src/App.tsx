@@ -1,5 +1,5 @@
 //import { useState } from 'react'
-import Header from "./components/Header/Header";
+//import Header from "./components/Header/Header";
 import Carousel from './components/Banner/Carousel';
 import About from "./components/About/About";
 import Imoveis from "./components/Imoveis/Imoveis";

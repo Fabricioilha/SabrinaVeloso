@@ -20,21 +20,21 @@ const partners = [
 ];
 
 const PartnersSection = () => (
-  <section className="w-full bg-gray-50 py-12 px-2 sm:px-4 md:px-0">
+  <section className="w-full py-12 px-2 sm:px-4 md:px-0 section-dark">
     <div className="max-w-5xl mx-auto">
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-pink-900 mb-8 text-center">
-        Marcas & Parcerias
-      </h2>
+      <h2 className="section-title mb-8 text-center">Marcas & Parcerias</h2>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 items-center justify-items-center">
         {partners.map((partner, idx) => (
           <div key={idx} className="flex flex-col items-center">
             <img
               src={partner.logo}
               alt={partner.name}
-              className="h-16 w-auto mb-2 object-contain"
+              className="h-16 w-auto mb-2 object-contain card-glass"
               loading="lazy"
             />
-            <span className="text-sm text-gray-700 text-center">{partner.name}</span>
+            <span className="text-sm text-[var(--gold)] text-center">
+              {partner.name}
+            </span>
           </div>
         ))}
       </div>

@@ -2,62 +2,81 @@ import React, { useState, useEffect, useRef } from "react";
 
 const properties = [
 	{
-		image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
-		title: "Apartamento Luxuoso",
-		description: "Vista para o mar, 3 suítes, 2 vagas de garagem.",
+		image: "/imoveis/img1.jpg",
+		title: "Apartamento Luxuoso 1",
+		description: "Vista panorâmica, acabamento premium e lazer completo.",
 	},
 	{
-		image: "https://images.unsplash.com/photo-1460518451285-97b6aa326961?auto=format&fit=crop&w=1200&q=80",
-		title: "Casa Moderna",
-		description: "Espaço gourmet, piscina e jardim privativo.",
+		image: "/imoveis/img2.jpg",
+		title: "Apartamento Luxuoso 2",
+		description: "Design moderno, varanda gourmet e localização privilegiada.",
 	},
 	{
-		image: "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=80",
-		title: "Cobertura Exclusiva",
-		description: "Cobertura duplex com área de lazer completa.",
+		image: "/imoveis/img3.jpg",
+		title: "Apartamento Luxuoso 3",
+		description: "Espaço amplo, vista para a cidade e segurança 24h.",
+	},
+	{
+		image: "/imoveis/img4.jpg",
+		title: "Apartamento Luxuoso 4",
+		description: "Ambientes integrados, iluminação natural e área de lazer.",
+	},
+	{
+		image: "/imoveis/img5.jpg",
+		title: "Apartamento Luxuoso 5",
+		description: "Piscina privativa, suíte master e vista para o mar.",
 	},
 ];
 
 const Carousel = () => {
-	const [current, setCurrent] = useState(0);
+	const [current, setCurrent] = useState(1); // Começa no primeiro slide real (índice 1)
 	const [offset, setOffset] = useState(0);
-	//const [isTransitioning, setIsTransitioning] = useState(false);
 	const startX = useRef<number | null>(null);
 	const isDragging = useRef(false);
+	const [transition, setTransition] = useState(true);
+
+	// Slides para loop infinito: [último, ...original, primeiro]
+	const slides = [
+		properties[properties.length - 1],
+		...properties,
+		properties[0],
+	];
 
 	// Troca automática a cada 4 segundos (loop infinito visual)
 	useEffect(() => {
 		const interval = setInterval(() => {
-			//setIsTransitioning(true);
-			setOffset(-window.innerWidth);
-			setTimeout(() => {
-				if (current === properties.length - 1) {
-					//setIsTransitioning(false);
-					setOffset(0);
-					setCurrent(0);
-				} else {
-					setCurrent((prev) => prev + 1);
-					setOffset(0);
-					//setIsTransitioning(false);
-				}
-			}, 300);
+			handleChangeSlide(1);
 		}, 4000);
 		return () => clearInterval(interval);
+		// eslint-disable-next-line
 	}, [current]);
 
+	// Corrige o loop infinito após a transição
+	useEffect(() => {
+		if (!transition) return;
+		if (current === slides.length - 1) {
+			setTimeout(() => {
+				setTransition(false);
+				setCurrent(1);
+			}, 300);
+		}
+		if (current === 0) {
+			setTimeout(() => {
+				setTransition(false);
+				setCurrent(slides.length - 2);
+			}, 300);
+		}
+	}, [current, slides.length, transition]);
+
+	useEffect(() => {
+		if (!transition) {
+			setTimeout(() => setTransition(true), 20);
+		}
+	}, [transition]);
+
 	const handleChangeSlide = (direction: number) => {
-		//setIsTransitioning(true);
-		setTimeout(() => {
-			setCurrent((prev) => {
-				if (direction > 0) {
-					return prev === properties.length - 1 ? 0 : prev + 1;
-				} else {
-					return prev === 0 ? properties.length - 1 : prev - 1;
-				}
-			});
-			setOffset(0);
-			//setIsTransitioning(false);
-		}, 300);
+		setCurrent((prev) => prev + direction);
+		setOffset(0);
 	};
 
 	// Touch events
@@ -112,7 +131,7 @@ const Carousel = () => {
 
 	return (
 		<div
-			className="w-full relative h-[40vh] md:h-[60vh] lg:h-[80vh] select-none overflow-hidden"
+			className="w-full relative h-screen select-none overflow-hidden"
 			onTouchStart={handleTouchStart}
 			onTouchMove={handleTouchMove}
 			onTouchEnd={handleTouchEnd}
@@ -120,49 +139,53 @@ const Carousel = () => {
 			onMouseMove={handleMouseMove}
 			onMouseUp={handleMouseUp}
 			onMouseLeave={handleMouseLeave}
-			//style={{ cursor: isDragging.current ? "grabbing" : "grab" }}
 		>
 			<div
 				className="w-full h-full flex"
 				style={{
 					transform: `translateX(calc(${-current * 100}% + ${offset}px))`,
-					transition: isDragging.current
-						? "none"
-						: "transform 0.3s cubic-bezier(.4,0,.2,1)",
+					transition:
+						transition && !isDragging.current
+							? "transform 0.3s cubic-bezier(.4,0,.2,1)"
+							: "none",
 				}}
 			>
-				{properties.map((property, idx) => (
-                	<img
-                        key={idx}
-                        src={property.image}
-                        alt={property.title}
-                        className="w-full h-[40vh] md:h-[60vh] lg:h-[80vh] object-cover flex-shrink-0"
-                        draggable={false}
-                    />
-                ))}
+				{slides.map((property, idx) => (
+					<div key={idx} className="w-full h-screen relative flex-shrink-0">
+						<img
+							src={property.image}
+							alt={property.title}
+							className="w-full h-full object-cover"
+							draggable={false}
+						/>
+						{/* Overlay levemente escuro */}
+						<div className="absolute inset-0 bg-black" style={{ opacity: 0.35 }}></div>
+					</div>
+				))}
 			</div>
-			<div className="absolute inset-0 flex flex-col justify-end p-8 pointer-events-none">
+			{/* Texto centralizado */}
+			<div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 pointer-events-none">
 				<h2 className="text-3xl md:text-5xl font-extrabold text-white mb-2 drop-shadow-lg">
-					{properties[current].title}
+					{
+						properties[
+							(current - 1 + properties.length) % properties.length
+						].title
+					}
 				</h2>
 				<p className="text-lg md:text-2xl text-pink-100 mb-6 drop-shadow">
-					{properties[current].description}
+					{
+						properties[
+							(current - 1 + properties.length) % properties.length
+						].description
+					}
 				</p>
-				<div className="pointer-events-auto">
-					<button
-						className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition"
-						onClick={() => alert(`Saiba mais sobre: ${properties[current].title}`)}
-					>
-						Saiba mais
-					</button>
-				</div>
 			</div>
 			<div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
 				{properties.map((_, idx) => (
 					<span
 						key={idx}
 						className={`w-3 h-3 rounded-full ${
-							idx === current
+							idx === (current - 1 + properties.length) % properties.length
 								? "bg-pink-400"
 								: "bg-white/60"
 						} border border-white mx-1 transition`}

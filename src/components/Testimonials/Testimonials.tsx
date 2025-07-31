@@ -19,24 +19,24 @@ const testimonials = [
 ];
 
 const Testimonials = () => (
-  <section className="w-full bg-white py-16 px-4">
+  <section className="w-full py-16 px-4 section-dark">
     <div className="max-w-5xl mx-auto">
-      <h2 className="text-3xl md:text-4xl font-bold text-pink-900 mb-10 text-center">
+      <h2 className="section-title mb-10 text-center">
         Depoimentos de Clientes
       </h2>
       <div className="grid gap-8 md:grid-cols-3">
         {testimonials.map((t, idx) => (
           <div
             key={idx}
-            className="bg-gray-50 rounded-xl shadow-md p-8 flex flex-col items-center text-center"
+            className="card-glass p-8 flex flex-col items-center text-center"
           >
             <img
               src={t.avatar}
               alt={t.name}
-              className="w-20 h-20 rounded-full mb-4 border-4 border-pink-200 object-cover"
+              className="w-20 h-20 rounded-full mb-4 border-4 border-[var(--gold)] object-cover"
             />
-            <p className="text-gray-700 italic mb-4">"{t.text}"</p>
-            <span className="font-semibold text-pink-700">{t.name}</span>
+            <p className="italic mb-4" style={{ color: "var(--white)" }}>"{t.text}"</p>
+            <span className="font-semibold" style={{ color: "var(--gold)" }}>{t.name}</span>
           </div>
         ))}
       </div>

@@ -146,7 +146,7 @@ const Carousel = () => {
 					transform: `translateX(calc(${-current * 100}% + ${offset}px))`,
 					transition:
 						transition && !isDragging.current
-							? "transform 0.3s cubic-bezier(.4,0,.2,1)"
+							? "transform 0.8s cubic-bezier(.77,0,.18,1)" // Transição mais suave
 							: "none",
 				}}
 			>
@@ -158,26 +158,18 @@ const Carousel = () => {
 							className="w-full h-full object-cover"
 							draggable={false}
 						/>
-						{/* Overlay levemente escuro */}
-						<div className="absolute inset-0 bg-black" style={{ opacity: 0.35 }}></div>
+						{/* Overlay mais escuro */}
+						<div className="absolute inset-0 bg-black" style={{ opacity: 0.55 }}></div>
 					</div>
 				))}
 			</div>
-			{/* Texto centralizado */}
+			{/* Texto centralizado fixo */}
 			<div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 pointer-events-none">
-				<h2 className="text-3xl md:text-5xl font-extrabold text-white mb-2 drop-shadow-lg">
-					{
-						properties[
-							(current - 1 + properties.length) % properties.length
-						].title
-					}
+				<h2 className="text-4xl md:text-6xl font-extrabold text-white mb-4 drop-shadow-lg font-playfair">
+					Sabrina Veloso
 				</h2>
-				<p className="text-lg md:text-2xl text-pink-100 mb-6 drop-shadow">
-					{
-						properties[
-							(current - 1 + properties.length) % properties.length
-						].description
-					}
+				<p className="text-xl md:text-3xl text-[var(--gold)] drop-shadow font-inter">
+					As melhores opções para você investir seu dinheiro
 				</p>
 			</div>
 			<div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
